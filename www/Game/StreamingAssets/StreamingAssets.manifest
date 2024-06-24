@@ -1,0 +1,13 @@
+ManifestFileVersion: 0
+CRC: 3272800873
+AssetBundleManifest:
+  AssetBundleInfos:
+    Info_0:
+      Name: emoquotation_bundle
+      Dependencies: {}
+    Info_1:
+      Name: changeblindness_bundle
+      Dependencies: {}
+    Info_2:
+      Name: emo_oddball_bundle
+      Dependencies: {}

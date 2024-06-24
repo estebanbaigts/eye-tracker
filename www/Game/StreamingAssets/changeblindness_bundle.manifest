@@ -1,0 +1,54 @@
+ManifestFileVersion: 0
+CRC: 2587482820
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 8df628474e8de9659760a4bcadd7a841
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: c90fc19e2679e5295d10bd00f33cb4c3
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/MODULE/NeuroPhysio/Cognition/MOD_Mindfulness_ChangeBlindness/Resources/ChangeBlindnessImages/6_src.jpg
+- Assets/MODULE/NeuroPhysio/Cognition/MOD_Mindfulness_ChangeBlindness/Resources/ChangeBlindnessImages/10_res.jpg
+- Assets/MODULE/NeuroPhysio/Cognition/MOD_Mindfulness_ChangeBlindness/Resources/ChangeBlindnessImages/17_src.jpg
+- Assets/MODULE/NeuroPhysio/Cognition/MOD_Mindfulness_ChangeBlindness/Resources/ChangeBlindnessImages/26_src.jpg
+- Assets/MODULE/NeuroPhysio/Cognition/MOD_Mindfulness_ChangeBlindness/Resources/ChangeBlindnessImages/3_res.jpg
+- Assets/MODULE/NeuroPhysio/Cognition/MOD_Mindfulness_ChangeBlindness/Resources/ChangeBlindnessImages/18_src.jpg
+- Assets/MODULE/NeuroPhysio/Cognition/MOD_Mindfulness_ChangeBlindness/Resources/ChangeBlindnessImages/9_src.jpg
+- Assets/MODULE/NeuroPhysio/Cognition/MOD_Mindfulness_ChangeBlindness/Resources/ChangeBlindnessImages/9_res.jpg
+- Assets/MODULE/NeuroPhysio/Cognition/MOD_Mindfulness_ChangeBlindness/Resources/ChangeBlindnessImages/25_res.png
+- Assets/MODULE/NeuroPhysio/Cognition/MOD_Mindfulness_ChangeBlindness/Resources/ChangeBlindnessImages/11_res.jpg
+- Assets/MODULE/NeuroPhysio/Cognition/MOD_Mindfulness_ChangeBlindness/Resources/ChangeBlindnessImages/25_src.png
+- Assets/MODULE/NeuroPhysio/Cognition/MOD_Mindfulness_ChangeBlindness/Resources/ChangeBlindnessImages/3_src.jpg
+- Assets/MODULE/NeuroPhysio/Cognition/MOD_Mindfulness_ChangeBlindness/Resources/ChangeBlindnessImages/21_res.jpg
+- Assets/MODULE/NeuroPhysio/Cognition/MOD_Mindfulness_ChangeBlindness/Resources/ChangeBlindnessImages/24_src.jpg
+- Assets/MODULE/NeuroPhysio/Cognition/MOD_Mindfulness_ChangeBlindness/Resources/ChangeBlindnessImages/16_res.jpg
+- Assets/MODULE/NeuroPhysio/Cognition/MOD_Mindfulness_ChangeBlindness/Resources/ChangeBlindnessImages/2_res.jpg
+- Assets/MODULE/NeuroPhysio/Cognition/MOD_Mindfulness_ChangeBlindness/Resources/ChangeBlindnessImages/11_src.jpg
+- Assets/MODULE/NeuroPhysio/Cognition/MOD_Mindfulness_ChangeBlindness/Resources/ChangeBlindnessImages/16_src.jpg
+- Assets/MODULE/NeuroPhysio/Cognition/MOD_Mindfulness_ChangeBlindness/Resources/ChangeBlindnessImages/12_res.jpg
+- Assets/MODULE/NeuroPhysio/Cognition/MOD_Mindfulness_ChangeBlindness/Resources/ChangeBlindnessImages/26_res.jpg
+- Assets/MODULE/NeuroPhysio/Cognition/MOD_Mindfulness_ChangeBlindness/Resources/ChangeBlindnessImages/23_src.jpg
+- Assets/MODULE/NeuroPhysio/Cognition/MOD_Mindfulness_ChangeBlindness/Resources/ChangeBlindnessImages/18_res.jpg
+- Assets/MODULE/NeuroPhysio/Cognition/MOD_Mindfulness_ChangeBlindness/Resources/ChangeBlindnessImages/24_res.jpg
+- Assets/MODULE/NeuroPhysio/Cognition/MOD_Mindfulness_ChangeBlindness/Resources/ChangeBlindnessImages/6_res.jpg
+- Assets/MODULE/NeuroPhysio/Cognition/MOD_Mindfulness_ChangeBlindness/Resources/ChangeBlindnessImages/10_src.jpg
+- Assets/MODULE/NeuroPhysio/Cognition/MOD_Mindfulness_ChangeBlindness/Resources/ChangeBlindnessImages/5_res.jpg
+- Assets/MODULE/NeuroPhysio/Cognition/MOD_Mindfulness_ChangeBlindness/Resources/ChangeBlindnessImages/17_res.jpg
+- Assets/MODULE/NeuroPhysio/Cognition/MOD_Mindfulness_ChangeBlindness/Resources/ChangeBlindnessImages/15_res.jpg
+- Assets/MODULE/NeuroPhysio/Cognition/MOD_Mindfulness_ChangeBlindness/Resources/ChangeBlindnessImages/20_src.jpg
+- Assets/MODULE/NeuroPhysio/Cognition/MOD_Mindfulness_ChangeBlindness/Resources/ChangeBlindnessImages/20_res.jpg
+- Assets/MODULE/NeuroPhysio/Cognition/MOD_Mindfulness_ChangeBlindness/Resources/ChangeBlindnessImages/23_res.jpg
+- Assets/MODULE/NeuroPhysio/Cognition/MOD_Mindfulness_ChangeBlindness/Resources/ChangeBlindnessImages/15_src.jpg
+- Assets/MODULE/NeuroPhysio/Cognition/MOD_Mindfulness_ChangeBlindness/Resources/ChangeBlindnessImages/5_src.jpg
+- Assets/MODULE/NeuroPhysio/Cognition/MOD_Mindfulness_ChangeBlindness/Resources/ChangeBlindnessImages/2_src.jpg
+- Assets/MODULE/NeuroPhysio/Cognition/MOD_Mindfulness_ChangeBlindness/Resources/ChangeBlindnessImages/21_src.jpg
+- Assets/MODULE/NeuroPhysio/Cognition/MOD_Mindfulness_ChangeBlindness/Resources/ChangeBlindnessImages/12_src.jpg
+Dependencies: []

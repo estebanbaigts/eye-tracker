@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+    <TITLE>WebGazer Demo</TITLE>
+    <link rel="stylesheet" type="text/css" href="./css/style.css">
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+    <script src="./webgazer.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
+        integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Play:wght@700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+            justify-content: center;
+        }
+
+        .container {
+            text-align: center;
+            padding: 20px;
+            justify-content: center;
+        }
+
+        .image-container {
+            position: relative;
+            z-index: 1;
+            justify-content: center;
+            align-items: flex-start;
+            height: 70vh;
+        }
+
+        img {
+            max-width: 60%;
+            height: auto;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+        }
+
+        .emotion-buttons {
+            display: flex;
+            justify-content: center;
+            margin-top: 40px;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 0 10px;
+            margin-top: 80px;
+            border-radius: 5px;
+            cursor: pointer;
+            z-index: 1;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        #result {
+            font-size: 18px;
+            font-weight: bold;
+            justify-content: center;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(7, 50px);
+            grid-gap: 5px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .case {
+            width: 50px;
+            height: 50px;
+            background-color: lightgray;
+            border: 1px solid #ccc;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .case.green {
+            background-color: green;
+        }
+
+        .counter {
+            font-size: 20px;
+            margin-top: 10px;
+        }
+
+        .stage {
+            font-size: 20px;
+            margin-top: 10px;
+        }
+
+        #endMessage {
+            display: none;
+            font-size: 50px;
+            font-weight: bold;
+            margin-top: 20px;
+            justify-content: center;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div LANG="en-US" LINK="#0000ff" DIR="LTR">
+        <script src="../node_modules/sweetalert/dist/sweetalert.min.js"></script>
+        <script src="./js/main.js"></script>
+        <script src="./js/calibration.js"></script>
+        <script src="./js/gaze_recording.js"></script>
+        <script src="./js/precision_calculation.js"></script>
+        <script src="./js/precision_store_points.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bowser@2.11.0/es5.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+
+        <nav id="webgazerNavbar" class="navbar navbar-expand-lg navbar-default navbar-fixed-top">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#myNavbar">
+                        <span class="navbar-toggler-icon">Menu</span>
+                    </button>
+                </div>
+                <div class="collapse navbar-collapse" id="myNavbar">
+                    <ul class="nav navbar-nav">
+                        <li id="Accuracy"><a>Not yet Calibrated</a></li>
+                        <li><a onclick="Restart()" href="#" class="liens">Calibrate</a></li>
+                        <li><a onclick="showGame()" href="#" class="liens">Play</a></li>
+                        <li><button id="endGameButton" class="btn btn-primary" style="display: none;" onclick="returnToHome()">Retour à l'accueil</button></li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a class="helpBtn" onclick="helpModalShow()" href="#"><span
+                                    class="glyphicon glyphicon-cog"></span> Help</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <div id="jeu"></div>
+
+        <div class="calibrationDiv">
+            <input type="button" class="Calibration" id="Pt1">
+            <input type="button" class="Calibration" id="Pt2">
+            <input type="button" class="Calibration" id="Pt3">
+            <input type="button" class="Calibration" id="Pt4">
+            <input type="button" class="Calibration" id="Pt5">
+            <input type="button" class="Calibration" id="Pt6">
+            <input type="button" class="Calibration" id="Pt7">
+            <input type="button" class="Calibration" id="Pt8">
+            <input type="button" class="Calibration" id="Pt9">
+            <input type="button" class="Calibration" id="Pt10">
+            <input type="button" class="Calibration" id="Pt11">
+            <input type="button" class="Calibration" id="Pt12">
+            <input type="button" class="Calibration" id="Pt13">
+            <input type="button" class="Calibration" id="Pt14">
+            <input type="button" class="Calibration" id="Pt15">
+            <input type="button" class="Calibration" id="Pt16">
+            <input type="button" class="Calibration" id="Pt17">
+        </div>
+
+        <div id="helpModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <img src="media/example/calibration.png" width="100%" height="100%"
+                            alt="webgazer demo instructions">
+                    </div>
+                    <div class="modal-footer">
+                        <button id="closeBtn" type="button" class="btn btn-default" data-bs-dismiss="modal">Close &
+                            load saved model</button>
+                        <button type="button" id='start_calibration' class="btn btn-primary" data-bs-dismiss="modal"
+                            onclick="Restart()">Calibrate</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div style="background: rgb(0, 0, 0); opacity: 0.85; width: 100%; height: 100%; position: fixed; z-index: 2147483647; top: 0px; display: none;"
+            id="WebGLMobileInputSystemUI">
+            <form
+                style="position: absolute;top: 30%;display: flex;width: 100%;justify-content: center;z-index: 2147483647;opacity: 1;"
+                id="form1">
+                <input type="text" id="inputField" style="display: block;font-size: 175%;" placeholder="enter here"
+                    size="35">
+                <input type="submit" value="DONE" style="display: block;margin-left: 0.4%;font-size: 175%;" id="doneButton">
+                <input value="CANCEL" id="cancelButton" type="button"
+                    style="margin-left: 0.4%;display: block;font-size: 175%;" onclick="cancel();">
+            </form>
+        </div>
+
+        <div id="emotionGame" style="display: none;">
+            <div class="container">
+                <div class="image-container">
+                    <img id="face-image" src="media/people/allya.png" alt="Image de visage">
+                </div>
+
+                <div class="emotion-buttons">
+                    <button onclick="selectEmotion('joie')">Joie</button>
+                    <button onclick="selectEmotion('tristesse')">Tristesse</button>
+                    <button onclick="selectEmotion('colère')">Colère</button>
+                    <button onclick="selectEmotion('surprise')">Surprise</button>
+                </div>
+
+                <p id="result"></p>
+            </div>
+            <canvas id="plotting_canvas" width="500" height="500" style="cursor:crosshair;"></canvas>
+        </div>
+
+        <div id="endMessage" class="container">
+            Merci, expérience terminée.
+        </div>
+
+        <script>
+            let gazeData = [];
+
+            function isGazeInsideImage(data) {
+                const imageElement = document.getElementById('face-image');
+                const imageRect = imageElement.getBoundingClientRect();
+
+                return (
+                    data.x >= imageRect.left &&
+                    data.x <= imageRect.right &&
+                    data.y >= imageRect.top &&
+                    data.y <= imageRect.bottom
+                );
+            }
+
+            function showGame() {
+                document.getElementById("emotionGame").style.display = "block";
+                console.log('Game is shown');
+            }
+
+            function downloadGazeData() {
+                const json = JSON.stringify(gazeData, null, 2);
+                const blob = new Blob([json], { type: 'application/json' });
+
+                const a = document.createElement('a');
+                a.href = URL.createObjectURL(blob);
+                a.download = 'EmotionalGameData.json';
+                a.click();
+
+                URL.revokeObjectURL(a.href);
+            }
+
+            webgazer.setGazeListener((data, clock) => {
+                if (data) {
+                    const currentImage = document.getElementById('face-image').src;
+                    const isInsideImage = isGazeInsideImage(data);
+                    gazeData.push({ x: data.x, y: data.y, time: clock, image: currentImage, insideImage: isInsideImage });
+                }
+            }).begin();
+
+            const images = [
+                { src: "media/people/allya.png", emotion: "joie" },
+                { src: "media/people/teem.png", emotion: "tristesse" },
+                { src: "media/people/jeanne.png", emotion: "colère" },
+                { src: "media/people/pierre.png", emotion: "surprise" }
+            ];
+
+            let currentIndex = 0;
+
+            function selectEmotion(emotion) {
+                const currentImage = images[currentIndex].src;
+
+                gazeData.push({ selectedEmotion: emotion, image: currentImage });
+
+                currentIndex++;
+                if (currentIndex < images.length) {
+                    setTimeout(() => {
+                        document.getElementById("face-image").src = images[currentIndex].src;
+                        document.getElementById("result").textContent = "";
+                    }, 1000);
+                } else {
+                    document.getElementById("result").textContent = "Jeu terminé";
+                    console.log('Game ended. Hiding game and showing end game button.');
+                    document.getElementById("emotionGame").style.display = "none";
+                    document.getElementById("endGameButton").style.display = "block";
+                    document.getElementById("endMessage").style.display = "block";
+                    downloadGazeData();
+                }
+            }
+
+            function returnToHome() {
+                window.location.href = 'index.html';
+            }
+
+            window.onload = function() {
+                webgazer.begin();
+            }
+        </script>
+        <script src="./js/resize_canvas.js"></script>
+        <script src="../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,90 @@
+ManifestFileVersion: 0
+CRC: 4206051703
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: fe28f80d53d209556a6f41ca56ac227c
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: c90fc19e2679e5295d10bd00f33cb4c3
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/MODULE/NeuroPhysio/Emotion/MOD_EmoRecognition_EmoQuotation/Resources/bundle/neutral_Cotton
+  swabs 2.jpg
+- Assets/MODULE/NeuroPhysio/Emotion/MOD_EmoRecognition_EmoQuotation/Resources/bundle/negative_Car
+  accident 4.jpg
+- Assets/MODULE/NeuroPhysio/Emotion/MOD_EmoRecognition_EmoQuotation/Resources/bundle/negative_Angry
+  face 3.jpg
+- Assets/MODULE/NeuroPhysio/Emotion/MOD_EmoRecognition_EmoQuotation/Resources/bundle/negative_Garbage
+  dump 2.jpg
+- Assets/MODULE/NeuroPhysio/Emotion/MOD_EmoRecognition_EmoQuotation/Resources/bundle/negative_Destruction
+  3.jpg
+- Assets/MODULE/NeuroPhysio/Emotion/MOD_EmoRecognition_EmoQuotation/Resources/bundle/positive_Food
+  2.jpg
+- Assets/MODULE/NeuroPhysio/Emotion/MOD_EmoRecognition_EmoQuotation/Resources/bundle/negative_Dog
+  attack 3.jpg
+- Assets/MODULE/NeuroPhysio/Emotion/MOD_EmoRecognition_EmoQuotation/Resources/bundle/negative_Car
+  crash 3.jpg
+- Assets/MODULE/NeuroPhysio/Emotion/MOD_EmoRecognition_EmoQuotation/Resources/bundle/negative_Plane
+  crash 4.jpg
+- Assets/MODULE/NeuroPhysio/Emotion/MOD_EmoRecognition_EmoQuotation/Resources/bundle/negative_Injury
+  1.jpg
+- Assets/MODULE/NeuroPhysio/Emotion/MOD_EmoRecognition_EmoQuotation/Resources/bundle/positive_Mother
+  1.jpg
+- Assets/MODULE/NeuroPhysio/Emotion/MOD_EmoRecognition_EmoQuotation/Resources/bundle/negative_War
+  1.jpg
+- Assets/MODULE/NeuroPhysio/Emotion/MOD_EmoRecognition_EmoQuotation/Resources/bundle/negative_Injury
+  2.jpg
+- Assets/MODULE/NeuroPhysio/Emotion/MOD_EmoRecognition_EmoQuotation/Resources/bundle/positive_Dessert
+  5.jpg
+- Assets/MODULE/NeuroPhysio/Emotion/MOD_EmoRecognition_EmoQuotation/Resources/bundle/positive_Rafting
+  5.jpg
+- Assets/MODULE/NeuroPhysio/Emotion/MOD_EmoRecognition_EmoQuotation/Resources/bundle/positive_Bungee
+  jumping 2.jpg
+- Assets/MODULE/NeuroPhysio/Emotion/MOD_EmoRecognition_EmoQuotation/Resources/bundle/neutral_Timber
+  3.jpg
+- Assets/MODULE/NeuroPhysio/Emotion/MOD_EmoRecognition_EmoQuotation/Resources/bundle/negative_Gun
+  2.jpg
+- Assets/MODULE/NeuroPhysio/Emotion/MOD_EmoRecognition_EmoQuotation/Resources/bundle/negative_Pollution
+  1.jpg
+- Assets/MODULE/NeuroPhysio/Emotion/MOD_EmoRecognition_EmoQuotation/Resources/bundle/neutral_Paperclips
+  3.jpg
+- Assets/MODULE/NeuroPhysio/Emotion/MOD_EmoRecognition_EmoQuotation/Resources/bundle/positive_Lake
+  9.jpg
+- Assets/MODULE/NeuroPhysio/Emotion/MOD_EmoRecognition_EmoQuotation/Resources/bundle/positive_Beach
+  2.jpg
+- Assets/MODULE/NeuroPhysio/Emotion/MOD_EmoRecognition_EmoQuotation/Resources/bundle/positive_Food
+  4.jpg
+- Assets/MODULE/NeuroPhysio/Emotion/MOD_EmoRecognition_EmoQuotation/Resources/bundle/positive_Parachuting
+  3.jpg
+- Assets/MODULE/NeuroPhysio/Emotion/MOD_EmoRecognition_EmoQuotation/Resources/bundle/positive_Nature
+  1.jpg
+- Assets/MODULE/NeuroPhysio/Emotion/MOD_EmoRecognition_EmoQuotation/Resources/bundle/neutral_Pinecone
+  2.jpg
+- Assets/MODULE/NeuroPhysio/Emotion/MOD_EmoRecognition_EmoQuotation/Resources/bundle/positive_Cold
+  6.jpg
+- Assets/MODULE/NeuroPhysio/Emotion/MOD_EmoRecognition_EmoQuotation/Resources/bundle/neutral_Bark
+  5.jpg
+- Assets/MODULE/NeuroPhysio/Emotion/MOD_EmoRecognition_EmoQuotation/Resources/bundle/neutral_Paper
+  2.jpg
+- Assets/MODULE/NeuroPhysio/Emotion/MOD_EmoRecognition_EmoQuotation/Resources/bundle/positive_Football
+  player 1.jpg
+- Assets/MODULE/NeuroPhysio/Emotion/MOD_EmoRecognition_EmoQuotation/Resources/bundle/positive_Picnic
+  1.jpg
+- Assets/MODULE/NeuroPhysio/Emotion/MOD_EmoRecognition_EmoQuotation/Resources/bundle/positive_Camping
+  1.jpg
+- Assets/MODULE/NeuroPhysio/Emotion/MOD_EmoRecognition_EmoQuotation/Resources/bundle/negative_Animal
+  carcass 6.jpg
+- Assets/MODULE/NeuroPhysio/Emotion/MOD_EmoRecognition_EmoQuotation/Resources/bundle/negative_Wolf
+  2.jpg
+- Assets/MODULE/NeuroPhysio/Emotion/MOD_EmoRecognition_EmoQuotation/Resources/bundle/positive_Cliff
+  diver 3.jpg
+- Assets/MODULE/NeuroPhysio/Emotion/MOD_EmoRecognition_EmoQuotation/Resources/bundle/negative_Injury
+  3.jpg
+Dependencies: []
