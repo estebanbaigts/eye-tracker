@@ -1,0 +1,130 @@
+html {
+    box-sizing: border-box;
+}
+
+*, *:before, *:after {
+    box-sizing: inherit;
+      }
+
+body {
+    min-width:600px!important;
+    margin-top: 0px;
+}
+
+button {
+    border-radius: 4px;
+}
+/* Video Feed Styling */
+#overlay {
+    /* Video Feed Styling:
+ * Include the !important keyword to override default styles applied by JS.
+ * webgazer.js sets defaults for: display, position, top, left, width, height
+ */
+}
+
+#webgazerVideoContainer {
+    display: block !important; 
+    position: fixed !important;
+    top: 0px !important;
+    left: 0px !important;
+    width: 320px !important;
+    height: 240px !important;
+    z-index: 1;
+}
+
+/* Navbar styling */
+#webgazerNavbar {
+    position: absolute;
+    top: 0;
+    left: 320px;
+    width: calc(100% - 330px);
+    z-index: 1;
+    box-shadow: 0px 3px 5px #ddd;
+    border:0px;
+    background-color: #fff;
+    opacity: .7;
+    font-size: 16px !important; /* rajouté pour être sûr que la ppté s'overlap pas avec des styles du jeu */
+}
+
+#Accuracy a{
+    background-color: #222;
+    color: #eee;
+    left: -15px;
+    padding-left: 80px;
+    padding-right: 40px;
+}
+#Accuracy {
+    background-color: #222;
+    padding-left: inherit;
+}
+
+li {
+    padding-left: 50px;
+}
+.navbar-right li {
+    padding-right: 20px;
+}
+
+.helpBtn {
+    display: inline-block;
+    padding: 15px;
+    border: none;
+    background: none;
+    color: #777;
+}
+.helpBtn:hover {
+    color: black!important;
+    text-decoration: none;
+}
+.modal-header {
+    border-bottom: none!important;
+}
+
+#jeu {
+    /*width: 100%;
+    height: 100%;*/
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* CALIBRAGE button styling */
+.Calibration{
+    width: 20px;
+    height: 20px;
+    -webkit-border-radius: 25px;
+    -moz-border-radius: 25px;
+    border-radius: 25px;
+    background-color: red;
+    opacity: 0.2;
+    border-color: black;
+    border-style: solid;
+    position:fixed;
+}
+
+/* Positions des 5 premiers points de CALIBRAGE
+    (le reste est défini dans calibration.js en fonction de la taille de CALIBRAGE
+    choisie) */
+
+/* 4 coins extérieurs */
+#Pt1{
+    top:2vh;
+    left:2vw;
+}
+#Pt2{
+    top:2vh;
+    left:97vw;
+}
+#Pt3{
+    top:96vh;
+    left:2vw;
+}
+#Pt4{
+    top:96vh;
+    left:97vw;
+}
+/* Point central qui arrive après */
+#Pt5{
+    top: 50vh;
+    left: 50vw;
+}

@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Face Detection, Distance, and Brightness Measurement</title>
+    <style>
+        .canvas_container {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        #video {
+            transform: scaleX(0); /* Pour inverser la vidéo horizontalement */
+        }
+        #info {
+            position: absolute;
+            top: 0;
+            left: 0;
+            color: rgb(30, 255, 30);
+            padding: 10px;
+        }
+        .next-button {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .instruction {
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgb(30, 255, 30);
+            font-size: 18px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="instruction">
+        <h1>Orientez votre caméra et placez votre visage de manière à ce que Distance et Lighting écrivent “OK”</h1>
+    </div>
+    <video id="video" width="640" height="480" autoplay></video>
+    <div class="canvas_container">
+        <canvas id="canvas" width="640" height="480"></canvas>
+        <div id="info">
+            <p>Distance: <span id="distance">Calculating...</span> cm</p>
+            <p>Brightness: <span id="brightness">Calculating...</span></p>
+        </div>
+        <a href="calibration_case_game.html" class="next-button">Next Page</a>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@vladmandic/face-api/dist/face-api.js"></script>
+    <script>
+        // Global constants for distance calculation
+        const KNOWN_DISTANCE = 50; // cm (adjust according to your setup)
+        const KNOWN_FACE_WIDTH = 14.5; // cm (adjust according to your setup)
+        const MIN_DISTANCE = 45; // cm
+        const MAX_DISTANCE = 120; // cm
+        const MIN_BRIGHTNESS = 100; // lux
+        const MAX_BRIGHTNESS = 145; // lux
+        let focalLength = null; // Initialize focal length
+
+        // Function to calculate distance from object size
+        function calculateDistance(faceWidth) {
+            return (KNOWN_FACE_WIDTH * focalLength) / faceWidth;
+        }
+
+        // Function to measure brightness
+        function measureBrightness(imageData) {
+            let totalBrightness = 0;
+            for (let i = 0; i < imageData.data.length; i += 4) {
+                totalBrightness += (imageData.data[i] + imageData.data[i + 1] + imageData.data[i + 2]) / 3;
+            }
+            const averageBrightness = totalBrightness / (imageData.width * imageData.height);
+            document.getElementById('brightness').textContent = averageBrightness.toFixed(2);
+            return averageBrightness;
+        }
+
+        // Main function to start camera and perform face detection
+        async function startCamera() {
+            const video = document.getElementById('video');
+            const canvas = document.getElementById('canvas');
+            const context = canvas.getContext('2d');
+
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ video: {} });
+                video.srcObject = stream;
+
+                video.addEventListener('loadedmetadata', () => {
+                    canvas.width = video.videoWidth;
+                    canvas.height = video.videoHeight;
+                });
+
+                video.addEventListener('play', async () => {
+                    await faceapi.nets.tinyFaceDetector.loadFromUri('/models');
+                    await faceapi.nets.faceLandmark68Net.loadFromUri('/models');
+
+                    const tick = async () => {
+                        if (video.paused || video.ended) {
+                            return;
+                        }
+                        context.drawImage(video, 0, 0, canvas.width, canvas.height);
+                        const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+                        const brightness = measureBrightness(imageData);
+
+                        const detections = await faceapi.detectAllFaces(video, new faceapi.TinyFaceDetectorOptions());
+                        context.clearRect(0, 0, canvas.width, canvas.height);
+                        context.drawImage(video, 0, 0, canvas.width, canvas.height);
+                        
+                        if (detections.length > 0) {
+                            const faceBox = detections[0].box;
+                            if (!focalLength) {
+                                focalLength = (faceBox.width * KNOWN_DISTANCE) / KNOWN_FACE_WIDTH;
+                            }
+                            const distance = calculateDistance(faceBox.width);
+                            document.getElementById('distance').textContent = distance.toFixed(2);
+
+                            // Draw rectangle around face
+                            context.beginPath();
+                            context.rect(faceBox.x, faceBox.y, faceBox.width, faceBox.height);
+                            context.lineWidth = 2;
+                            context.strokeStyle = 'red';
+                            context.stroke();
+
+                            // Check conditions and display messages
+                            let distanceMessage = '';
+                            if (distance < MIN_DISTANCE) {
+                                distanceMessage = 'Move further away';
+                                context.strokeStyle = 'yellow';
+                            } else if (distance > MAX_DISTANCE) {
+                                distanceMessage = 'Move closer';
+                                context.strokeStyle = 'yellow';
+                            } else {
+                                distanceMessage = 'Distance OK';
+                                context.strokeStyle = 'green';
+                            }
+
+                            let brightnessMessage = '';
+                            if (brightness < MIN_BRIGHTNESS) {
+                                brightnessMessage = 'Increase lighting';
+                                context.strokeStyle = 'yellow';
+                            } else if (brightness > MAX_BRIGHTNESS) {
+                                brightnessMessage = 'Decrease lighting';
+                                context.strokeStyle = 'yellow';
+                            } else {
+                                brightnessMessage = 'Lighting OK';
+                                context.strokeStyle = 'green';
+                            }
+
+                            // Draw messages on canvas
+                            context.font = '16px Arial';
+                            context.fillStyle = 'yellow';
+                            context.fillText(distanceMessage, faceBox.x, faceBox.y - 10);
+                            context.fillText(brightnessMessage, faceBox.x, faceBox.y + faceBox.height + 20);
+                        }
+
+                        setTimeout(tick, 100); // Update at ~10 fps
+                    };
+                    tick();
+                });
+            } catch (error) {
+                console.error('Error accessing the camera: ', error);
+            }
+        }
+
+        startCamera();
+    </script>
+</body>
+</html>
