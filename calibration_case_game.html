@@ -77,7 +77,6 @@
             right: 15%;
             background-color: #f0f0f0;
         }
-
     </style>
 </head>
 <body>
@@ -162,7 +161,7 @@
         <div class="grid"></div>
     </div>
 
-    <script src="./node_modules/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="./sweetalert.min.js"></script>
     <script src="./main.js"></script>
     <script src="./calibration.js"></script>
     <script src="./gaze_recording.js"></script>
@@ -171,192 +170,208 @@
     <script src="./resize_canvas.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bowser@2.11.0/es5.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
-    <script src="./node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="./bootstrap.bundle.min.js"></script>
 
 <script>
-    var stage = 1;
-    var attempts = 20;
-    var interval;
-    var previousCases = [];
-    var dataLog = [];
-    var gazeData = [];
-    var combinedData = [];
+  var stage = 1;
+        var attempts = 20;
+        var interval;
+        var previousCases = [];
+        var dataLog = [];
+        var gazeData = [];
+        var combinedData = [];
+        var gridCoordinates = {}; // To store grid coordinates
 
-    webgazer.setGazeListener(function (data, elapsedTime) {
-        if (data == null) {
-            return;
+        webgazer.setGazeListener(function (data, elapsedTime) {
+            if (data == null) {
+                return;
+            }
+            var x = data.x; // gaze x coordinate
+            var y = data.y; // gaze y coordinate
+            var timestamp = new Date().toISOString(); // Convert elapsedTime to ISO format
+            gazeData.push({ x, y, timestamp });
+        }).begin();
+
+        function initGame() {
+            createGrid();
+            updateStageIndicator();
+            startStage(stage);
         }
-        var x = data.x; // gaze x coordinate
-        var y = data.y; // gaze y coordinate
-        gazeData.push({ x, y, timestamp: elapsedTime });
-    }).begin();
 
-    function initGame() {
-        createGrid();
-        updateStageIndicator();
-        startStage(stage);
-    }
-
-    function createGrid() {
-        var grid = document.querySelector('.grid');
-        grid.innerHTML = '';
-        for (var i = 0; i < 49; i++) {
-            var caseDiv = document.createElement('div');
-            caseDiv.classList.add('case');
-            caseDiv.id = 'case' + i;
-            grid.appendChild(caseDiv);
-        }
-        attempts = 20;
-        previousCases = [];
-        updateCounter();
-    }
-
-    function startStage(currentStage) {
-        clearInterval(interval);
-        interval = setInterval(() => {
-            previousCases.forEach((caseDiv) => {
-                caseDiv.classList.remove('green');
-            });
+        function createGrid() {
+            var grid = document.querySelector('.grid');
+            grid.innerHTML = '';
+            for (var i = 0; i < 49; i++) {
+                var caseDiv = document.createElement('div');
+                caseDiv.classList.add('case');
+                caseDiv.id = 'case' + i;
+                grid.appendChild(caseDiv);
+            }
+            attempts = 20;
             previousCases = [];
+            updateCounter();
+            getGridCoordinates(); // Get the coordinates of the grid
+        }
 
-            var indexes = getRandomIndexes(currentStage);
+        function getGridCoordinates() {
+            var firstCase = document.getElementById('case0').getBoundingClientRect();
+            var lastCase = document.getElementById('case48').getBoundingClientRect();
+            var topRightCase = document.getElementById('case6').getBoundingClientRect();
+            var bottomLeftCase = document.getElementById('case42').getBoundingClientRect();
 
-            indexes.forEach((index) => {
-                var currentCase = document.getElementById('case' + index);
-                currentCase.classList.add('green');
-                previousCases.push(currentCase);
-            });
+            gridCoordinates = {
+                topLeft: { x: firstCase.left, y: firstCase.top },
+                topRight: { x: topRightCase.right, y: topRightCase.top },
+                bottomLeft: { x: bottomLeftCase.left, y: bottomLeftCase.bottom },
+                bottomRight: { x: lastCase.right, y: lastCase.bottom }
+            };
+        }
 
-            logData("cases_lighted", { stage: currentStage, cases: indexes });
-
-            setTimeout(() => {
+        function startStage(currentStage) {
+            clearInterval(interval);
+            interval = setInterval(() => {
                 previousCases.forEach((caseDiv) => {
                     caseDiv.classList.remove('green');
                 });
-            }, 1000);
-            attempts--;
-            updateCounter();
+                previousCases = [];
 
-            if (attempts <= 0) {
-                clearInterval(interval);
-                if (currentStage < 3) {
-                    stage++;
-                    createGrid();
-                    updateStageIndicator();
-                    startStage(stage);
-                } else {
-                    // Game finished
-                    alert("Jeu terminé!");
-                    showFinishButton(); // Show the button to go to another page
-                    downloadGameData();
+                var indexes = getRandomIndexes(currentStage);
+
+                indexes.forEach((index) => {
+                    var currentCase = document.getElementById('case' + index);
+                    currentCase.classList.add('green');
+                    previousCases.push(currentCase);
+                });
+
+                logData("cases_lighted", { stage: currentStage, cases: indexes });
+
+                setTimeout(() => {
+                    previousCases.forEach((caseDiv) => {
+                        caseDiv.classList.remove('green');
+                    });
+                }, 1000);
+                attempts--;
+                updateCounter();
+
+                if (attempts <= 0) {
+                    clearInterval(interval);
+                    if (currentStage < 3) {
+                        stage++;
+                        createGrid();
+                        updateStageIndicator();
+                        startStage(stage);
+                    } else {
+                        // Game finished
+                        alert("Jeu terminé!");
+                        showFinishButton(); // Show the button to go to another page
+                        downloadGameData();
+                    }
                 }
-            }
-        }, 3000);
-    }
-
-    function showFinishButton() {
-        var gameContainer = document.getElementById('gameContainer');
-        var finishButton = document.createElement('button');
-        finishButton.textContent = 'Passer à une autre page';
-        finishButton.classList.add('btn', 'btn-primary', 'mt-3');
-        finishButton.onclick = function() {
-            window.location.href = 'calibration_emotional_game.html';
-        };
-        gameContainer.appendChild(finishButton);
-    }
-
-    function logData(event, details) {
-        combinedData.push({
-            event,
-            details,
-            gazeData: [...gazeData], // Add a snapshot of the current gaze data
-            timestamp: new Date().toISOString()
-        });
-        gazeData = []; // Clear the gaze data for the next interval
-        console.log("Données enregistrées:", combinedData);
-    }
-
-    function updateCounter() {
-        document.querySelector('.counter').textContent = `Essais restants: ${attempts}`;
-    }
-
-    function updateStageIndicator() {
-        document.querySelector('.stage').textContent = `Étape: ${stage}`;
-    }
-
-    function getRandomIndexes(currentStage) {
-        var indexes = [];
-        if (currentStage === 1) {
-            var randomIndex = Math.floor(Math.random() * 49);
-            indexes.push(randomIndex);
-        } else if (currentStage === 2) {
-            var validIndexes = [];
-            for (var i = 0; i < 42; i++) {
-                if (i % 7 < 6) validIndexes.push(i);
-            }
-            var randomStart = validIndexes[Math.floor(Math.random() * validIndexes.length)];
-            indexes = [
-                randomStart,
-                randomStart + 1,
-                randomStart + 7,
-                randomStart + 8
-            ];
-        } else if (currentStage === 3) {
-            var validIndexes = [];
-            for (var i = 0; i < 35; i++) {
-                if (i % 7 < 5) validIndexes.push(i);
-            }
-            var randomStart = validIndexes[Math.floor(Math.random() * validIndexes.length)];
-            indexes = [
-                randomStart,
-                randomStart + 1, randomStart + 2,
-                randomStart + 7, randomStart + 8, randomStart + 9,
-                randomStart + 14, randomStart + 15, randomStart + 16
-            ];
+            }, 3000);
         }
-        return indexes;
-    }
 
-    function showGame() {
-        document.getElementById("gameContainer").style.display = "block";
-        initGame();
-    }
+        function showFinishButton() {
+            var gameContainer = document.getElementById('gameContainer');
+            var finishButton = document.createElement('button');
+            finishButton.textContent = 'Passer à une autre page';
+            finishButton.classList.add('btn', 'btn-primary', 'mt-3');
+            finishButton.onclick = function () {
+                window.location.href = 'calibration_emotional_game.html';
+            };
+            gameContainer.appendChild(finishButton);
+        }
 
-    function downloadGameData() {
-        combinedData.forEach(record => {
-            record.gazeData.forEach(gaze => {
-                record.details.cases.forEach(caseIndex => {
-                    var caseElement = document.getElementById('case' + caseIndex);
-                    var caseRect = caseElement.getBoundingClientRect();
-                    var caseViewed = (
-                        gaze.x >= caseRect.left &&
-                        gaze.x <= caseRect.right &&
-                        gaze.y >= caseRect.top &&
-                        gaze.y <= caseRect.bottom
-                    );
-                    gaze.caseIndex = caseIndex;
-                    gaze.stage = record.details.stage;
-                    gaze.caseViewed = caseViewed;
+        function logData(event, details) {
+            combinedData.push({
+                event,
+                details,
+                gazeData: [...gazeData], // Add a snapshot of the current gaze data
+                timestamp: new Date().toISOString()
+            });
+            gazeData = []; // Clear the gaze data for the next interval
+            console.log("Données enregistrées:", combinedData);
+        }
+
+        function updateCounter() {
+            document.querySelector('.counter').textContent = `Essais restants: ${attempts}`;
+        }
+
+        function updateStageIndicator() {
+            document.querySelector('.stage').textContent = `Étape: ${stage}`;
+        }
+
+        function getRandomIndexes(currentStage) {
+            var indexes = [];
+            if (currentStage === 1) {
+                var randomIndex = Math.floor(Math.random() * 49);
+                indexes.push(randomIndex);
+            } else if (currentStage === 2) {
+                var validIndexes = [];
+                for (var i = 0; i < 42; i++) {
+                    if (i % 7 < 6) validIndexes.push(i);
+                }
+                var randomStart = validIndexes[Math.floor(Math.random() * validIndexes.length)];
+                indexes = [
+                    randomStart,
+                    randomStart + 1,
+                    randomStart + 7,
+                    randomStart + 8
+                ];
+            } else if (currentStage === 3) {
+                var validIndexes = [];
+                for (var i = 0; i < 35; i++) {
+                    if (i % 7 < 5) validIndexes.push(i);
+                }
+                var randomStart = validIndexes[Math.floor(Math.random() * validIndexes.length)];
+                indexes = [
+                    randomStart,
+                    randomStart + 1, randomStart + 2,
+                    randomStart + 7, randomStart + 8, randomStart + 9,
+                    randomStart + 14, randomStart + 15, randomStart + 16
+                ];
+            }
+            return indexes;
+        }
+
+        function showGame() {
+            document.getElementById("gameContainer").style.display = "block";
+            initGame();
+        }
+
+        function downloadGameData() {
+            combinedData.forEach(record => {
+                record.gazeData.forEach(gaze => {
+                    gaze.caseViewed = record.details.cases.some(caseIndex => {
+                        var caseElement = document.getElementById('case' + caseIndex);
+                        var caseRect = caseElement.getBoundingClientRect();
+                        return (
+                            gaze.x >= caseRect.left &&
+                            gaze.x <= caseRect.right &&
+                            gaze.y >= caseRect.top &&
+                            gaze.y <= caseRect.bottom
+                        );
+                    });
                 });
             });
-        });
 
-        var blob = new Blob([JSON.stringify(combinedData, null, 2)], { type: 'application/json' });
-        var url = URL.createObjectURL(blob);
-        var a = document.createElement('a');
-        a.href = url;
-        a.download = 'CaseGame.json';
-        document.body.appendChild(a); // Append the anchor element to the body and trigger a click event
-        a.click();
-        document.body.removeChild(a); // Clean up: remove the anchor element and revoke the URL object
-        URL.revokeObjectURL(url);
-    }
-    // Ensure webgazer is started and the game is shown on window load
-    window.onload = function () {
-        webgazer.begin();
-    }
+            combinedData.push({ gridCoordinates }); // Add grid coordinates to the data
+
+            var blob = new Blob([JSON.stringify(combinedData, null, 2)], { type: 'application/json' });
+            var url = URL.createObjectURL(blob);
+            var a = document.createElement('a');
+            a.href = url;
+            a.download = 'CaseGame.json';
+            document.body.appendChild(a); // Append the anchor element to the body and trigger a click event
+            a.click();
+            document.body.removeChild(a); // Clean up: remove the anchor element and revoke the URL object
+            URL.revokeObjectURL(url);
+        }
+
+        // Ensure webgazer is started and the game is shown on window load
+        window.onload = function () {
+            webgazer.begin();
+        }
 </script>
 
 </body>
 </html>
-
