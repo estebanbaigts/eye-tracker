@@ -15,18 +15,17 @@ Version Unity WebGL pour le jeu
 Instructions de construction
 
 ### Clonez le dépôt :
-clone git https://github.com/OpenMindInnovation/backpack/tree/eye_tracking_poc
+git clone https://github.com/OpenMindInnovation/backpack/tree/eye_tracking_poc
 cd notebooks
 cd eye-tracker
 
 ### Installer les dépendances :
 rm -rf node_modules package-lock.json
-npm cache propre --force
-installation npm
+npm cache clean --force
+npm install 
 
 ### Construisez le projet :
-Copier le code
-npm exécuter la construction
+npm run build
 
 ### Installez un serveur local pour servir les fichiers :
 Copier le code
@@ -34,10 +33,9 @@ npm install --global servir
 servir www
 
 ### Si la commande serve échoue :
-Copier le code
 npm install -g serveur http
 echo 'start: serveur http' >> package.json
-npm démarrer
+npm start
 
 ### Ajout d'un jeu
 Copiez le dossier de build Unity WebGL dans le répertoire Game/.
